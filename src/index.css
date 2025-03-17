@@ -1,0 +1,50 @@
+body {
+  background-color:lightblue;
+  font-family: sans-serif;
+}
+
+.container {
+  width: 100%;
+  text-align: center;
+}
+
+.search {
+  width: 100%;
+  margin-top: 5px;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255, 0.4);
+  height: 30px;
+}
+
+.info {
+  color: white;
+
+  .name {
+    font-size: 25px;
+    font-weight: 200;
+    margin-top: 25px;
+  }
+  .temp {
+    font-size: 90px;
+    font-weight: 600;
+  }
+  .temp-max {
+    font-size: 20px;
+    font-weight: 400;
+    font-style: italic;
+  }
+  .temp-min {
+    font-size: 20px;
+    font-weight: 400;
+    font-style: italic;
+  }
+  .humidity {
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .weather {
+    font-size: 25px;
+    font-weight: 200;
+    font-style: italic;
+  }
+}

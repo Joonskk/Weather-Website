@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react'
-import Search from './components/Search'
-import Info from './components/Info'
-import Transfer from './components/Transfer'
+import Nav from './components/Nav'
+import CurrentInfo from './components/CurrentInfo'
 
 function App() {
 
@@ -33,9 +32,9 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <Search location={location} setLocation={setLocation} getWeatherByPosition={getWeatherByPosition} />
-        <Info weatherJSON={weatherJSON} isCelcius={isCelcius} />
-        <Transfer isCelcius={isCelcius} setIsCelcius={setIsCelcius} />
+        <Nav location={location} setLocation={setLocation} getWeatherByPosition={getWeatherByPosition}
+        isCelcius={isCelcius} setIsCelcius={setIsCelcius} />
+        <CurrentInfo weatherJSON={weatherJSON} isCelcius={isCelcius} />
       </div>
     </div>
   );

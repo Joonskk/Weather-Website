@@ -11,8 +11,8 @@ const Transfer = ({isCelcius, setIsCelcius}) => {
     },[isCelcius])
 
     return (
-        <div>
-            <button onClick={onClick}>{isCelcius ? "To Fahrenheit" : "To Celcius"}</button>
+        <div className="transfer">
+            <button onClick={onClick}>{isCelcius ? "°C" : "°F"}</button>
         </div>
     )
 }

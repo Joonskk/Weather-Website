@@ -1,6 +1,6 @@
-const Info = ({weatherJSON, isCelcius}) => {
+const CurrentInfo = ({weatherJSON, isCelcius}) => {
     return (
-        <div className="info">
+        <div className="currentInfo">
             {weatherJSON ? (
           <>
             <div className="name">{weatherJSON.name}</div>
@@ -29,4 +29,4 @@ const Info = ({weatherJSON, isCelcius}) => {
     )
 }
 
-export default Info;
+export default CurrentInfo;

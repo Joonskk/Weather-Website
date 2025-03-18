@@ -8,15 +8,62 @@ body {
   text-align: center;
 }
 
-.search {
-  width: 100%;
-  margin-top: 5px;
-  box-sizing: border-box;
-  background-color: rgb(255, 255, 255, 0.4);
-  height: 30px;
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-bottom: 1px solid black;
 }
 
-.info {
+.logo {
+  width: 100px;
+}
+
+.logo a {
+  font-size: 24px;              /* 로고 텍스트 크기 */
+  font-weight: bold;            /* 로고 텍스트 두껍게 */
+  text-decoration: none;        /* 링크 기본 밑줄 제거 */
+}
+
+.search {
+  width: 400px;
+  display: flex;                /* flex 사용 */
+  justify-content: center;
+  align-items: center;          /* 세로 중앙 정렬 */
+  box-sizing: border-box;
+}
+
+.search input {
+  font-size: 16px;
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255, 0.2);
+  height: 40px;
+  vertical-align: middle;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.transfer {
+  width: 100px;
+}
+
+.transfer button {
+  font-size: 15px;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 30px;
+}
+
+.transfer button:hover {
+  background-color: black;
+  color: white;
+}
+
+.currentInfo {
   color: white;
 
   .name {
@@ -27,6 +74,13 @@ body {
   .temp {
     font-size: 90px;
     font-weight: 600;
+    background-color: rgb(255, 255, 255, 0.4);
+    display:inline-flex; /* 박스 크기를 글자 크기에 맞추기 */
+    align-items: center;
+    height: 120px;
+    vertical-align: middle;
+    border-radius: 10px;
+    padding: 0 20px;
   }
   .temp-max {
     font-size: 20px;

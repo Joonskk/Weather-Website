@@ -13,9 +13,9 @@ const Search = ({location, setLocation, getWeatherByPosition}) => {
     },[location])
 
     return (
-        <search className="searchDiv">
-            <input className="search" placeholder="Search Location" onKeyDown={(e)=>onChange(e)}/>
-        </search>
+        <div className="search">
+            <input placeholder="Search Location" onKeyDown={(e)=>onChange(e)}/>
+        </div>
     )
 }
 

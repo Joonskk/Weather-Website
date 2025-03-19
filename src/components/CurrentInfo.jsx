@@ -1,29 +1,74 @@
-const CurrentInfo = ({weatherJSON, isCelcius}) => {
+const CurrentInfo = ({weatherJSON, isCelcius, error}) => {
+
+    const isDataValid =
+        weatherJSON &&
+        weatherJSON !== "wrong location" &&
+        weatherJSON.main &&
+        weatherJSON.weather;
+
     return (
         <div className="currentInfo">
-            {weatherJSON ? (
+            {isDataValid ? (
           <>
             <div className="name">{weatherJSON.name}</div>
             {isCelcius ?
-            <>
-            <div className="temp">{(weatherJSON.main.temp - 273.15).toFixed(0)}°C</div>
-            <div className="temp-max">max: {(weatherJSON.main.temp_max - 273.15).toFixed(0)}°C</div>
-            <div className="temp-min">min: {(weatherJSON.main.temp_min - 273.15).toFixed(0)}°C</div>
-            <div className="humidity">💧: {weatherJSON.main.humidity}%</div>
-            <div className="weather">{weatherJSON.weather[0].main}</div>
-            </>
+            <div className="deepInfo">
+              <div className="deepInfo-left">
+                <div className="temp">{(weatherJSON.main.temp - 273.15).toFixed(0)}°C</div>
+                <div className="weather">{weatherJSON.weather[0].main}</div>
+              </div>
+              <div className="deepInfo-right">
+                <table>
+                  <tbody>
+                  <tr>
+                    <th>최대</th>
+                    <td>{(weatherJSON.main.temp_max - 273.15).toFixed(0)}°C</td>
+                    <th>습도</th>
+                    <td>{weatherJSON.main.humidity}%</td>
+                  </tr>
+                  <tr>
+                    <th>최소</th>
+                    <td>{(weatherJSON.main.temp_min - 273.15).toFixed(0)}°C</td>
+                    <th>체감</th>
+                    <td>{(weatherJSON.main.feels_like - 273.15).toFixed(0)}°C</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
             :
-            <>
-            <div className="temp">{((weatherJSON.main.temp - 273.15)*9/5+32).toFixed(0)}°F</div>
-            <div className="temp-max">max: {((weatherJSON.main.temp_max - 273.15)*9/5+32).toFixed(0)}°F</div>
-            <div className="temp-min">min: {((weatherJSON.main.temp_min - 273.15)*9/5+32).toFixed(0)}°F</div>
-            <div className="humidity">💧: {weatherJSON.main.humidity}%</div>
-            <div className="weather">{weatherJSON.weather[0].main}</div>
-            </>
+            <div className="deepInfo">
+              <div className="deepInfo-left">
+                <div className="temp">{((weatherJSON.main.temp - 273.15)*9/5+32).toFixed(0)}°F</div>
+                <div className="weather">{weatherJSON.weather[0].main}</div>
+              </div>
+              <div className="deepInfo-right">
+                <table>
+                  <tbody>
+                  <tr>
+                    <th>최대</th>
+                    <td>{((weatherJSON.main.temp_max - 273.15)*9/5+32).toFixed(0)}°F</td>
+                    <th>습도</th>
+                    <td>{weatherJSON.main.humidity}%</td>
+                  </tr>
+                  <tr>
+                    <th>최소</th>
+                    <td>{((weatherJSON.main.temp_min - 273.15)*9/5+32).toFixed(0)}°F</td>
+                    <th>체감</th>
+                    <td>{((weatherJSON.main.feels_like - 273.15)*9/5+32).toFixed(0)}°F</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
             }
           </>
         ) : (
-          <h1>Loading...</h1>
+          <>
+          {
+            error ? <h1>Wrong Location</h1> : <h1>Loading...</h1>
+          }
+          </>
         )}
         </div>
     )

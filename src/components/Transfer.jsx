@@ -7,7 +7,6 @@ const Transfer = ({isCelcius, setIsCelcius}) => {
     }
 
     useEffect(()=>{
-        console.log(isCelcius)
     },[isCelcius])
 
     return (

@@ -8,12 +8,15 @@ body {
   text-align: center;
 }
 
+/*************** navbar ***************/
+
 nav {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50px;
   border-bottom: 1px solid black;
+  padding-bottom: 10px;
 }
 
 .logo {
@@ -24,6 +27,7 @@ nav {
   font-size: 24px;              /* 로고 텍스트 크기 */
   font-weight: bold;            /* 로고 텍스트 두껍게 */
   text-decoration: none;        /* 링크 기본 밑줄 제거 */
+  color: black;
 }
 
 .search {
@@ -63,13 +67,35 @@ nav {
   color: white;
 }
 
+/*************** Info ***************/
+
+.info {
+  display: flex;
+}
+
+/******* Left Side *******/
+
+.leftside {
+  flex: 6;
+}
+
+/******* Right Side *******/
+
+.rightside {
+  flex: 4;
+}
+
+
+/*************** Current Info ***************/
+
 .currentInfo {
-  color: white;
+  padding: 50px;
+  color: black;
+  font-size: 18px;
 
   .name {
     font-size: 25px;
     font-weight: 200;
-    margin-top: 25px;
   }
   .temp {
     font-size: 90px;
@@ -77,28 +103,69 @@ nav {
     background-color: rgb(255, 255, 255, 0.4);
     display:inline-flex; /* 박스 크기를 글자 크기에 맞추기 */
     align-items: center;
+    justify-content: center;
     height: 120px;
     vertical-align: middle;
     border-radius: 10px;
     padding: 0 20px;
-  }
-  .temp-max {
-    font-size: 20px;
-    font-weight: 400;
-    font-style: italic;
-  }
-  .temp-min {
-    font-size: 20px;
-    font-weight: 400;
-    font-style: italic;
-  }
-  .humidity {
-    font-size: 20px;
-    font-weight: 400;
+    width: 50%;
   }
   .weather {
-    font-size: 25px;
+    font-size: 50px;
     font-weight: 200;
     font-style: italic;
+    width: 50%;
   }
 }
+
+.deepInfo {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 150px;
+}
+
+.deepInfo-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
+
+.deepInfo-right {
+  width: 40%;
+  height: 40%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  border-left: 1px solid black;
+}
+
+.deepInfo-right table {
+  text-align: left;
+}
+
+.deepInfo-right table th {
+  width: 40px;
+  padding-left: 10px;
+}
+.deepInfo-right table td {
+  width: 60px;
+}
+
+/*************** Hourly Info ***************/
+
+.HourlyInfo {
+  background-color: #eee;
+  height: 200px;
+}
+
+
+
+
+/*************** Daily Info ***************/
+
+.dailyInfo {
+  background-color: #eee;
+}
+

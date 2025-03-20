@@ -11,11 +11,12 @@ const CurrentInfo = ({weatherJSON, isCelcius, error}) => {
             {isDataValid ? (
           <>
             <div className="name">{weatherJSON.name}</div>
+            {console.log(weatherJSON)}
             {isCelcius ?
             <div className="deepInfo">
               <div className="deepInfo-left">
                 <div className="temp">{(weatherJSON.main.temp - 273.15).toFixed(0)}°C</div>
-                <div className="weather">{weatherJSON.weather[0].main}</div>
+                <div className="weather">{weatherJSON.weather[0].description}</div>
               </div>
               <div className="deepInfo-right">
                 <table>
@@ -35,12 +36,15 @@ const CurrentInfo = ({weatherJSON, isCelcius, error}) => {
                   </tbody>
                 </table>
               </div>
+              <div className="weather-icon">
+                <img src={`https://openweathermap.org/img/wn/${weatherJSON.weather[0].icon}@2x.png`} alt={weatherJSON.weather[0].description} />
+              </div>
             </div>
             :
             <div className="deepInfo">
               <div className="deepInfo-left">
                 <div className="temp">{((weatherJSON.main.temp - 273.15)*9/5+32).toFixed(0)}°F</div>
-                <div className="weather">{weatherJSON.weather[0].main}</div>
+                <div className="weather">{weatherJSON.weather[0].description}</div>
               </div>
               <div className="deepInfo-right">
                 <table>
@@ -59,6 +63,9 @@ const CurrentInfo = ({weatherJSON, isCelcius, error}) => {
                   </tr>
                   </tbody>
                 </table>
+              </div>
+              <div className="weather-icon">
+                <img src={`https://openweathermap.org/img/wn/${weatherJSON.weather[0].icon}@2x.png`} alt={weatherJSON.weather[0].description} />
               </div>
             </div>
             }

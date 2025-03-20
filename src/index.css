@@ -1,5 +1,5 @@
 body {
-  background-color:lightblue;
+  background-color:#ffffff;
   font-family: sans-serif;
 }
 
@@ -27,7 +27,7 @@ nav {
   font-size: 24px;              /* 로고 텍스트 크기 */
   font-weight: bold;            /* 로고 텍스트 두껍게 */
   text-decoration: none;        /* 링크 기본 밑줄 제거 */
-  color: black;
+  color: #111111;
 }
 
 .search {
@@ -43,7 +43,7 @@ nav {
   width: 100%;
   padding: 15px;
   box-sizing: border-box;
-  background-color: rgb(255, 255, 255, 0.2);
+  background-color: rgb(0, 0, 0, 0.05);
   height: 40px;
   vertical-align: middle;
   border: 1px solid black;
@@ -71,20 +71,8 @@ nav {
 
 .info {
   display: flex;
+  justify-content: center;
 }
-
-/******* Left Side *******/
-
-.leftside {
-  flex: 6;
-}
-
-/******* Right Side *******/
-
-.rightside {
-  flex: 4;
-}
-
 
 /*************** Current Info ***************/
 
@@ -100,7 +88,7 @@ nav {
   .temp {
     font-size: 90px;
     font-weight: 600;
-    background-color: rgb(255, 255, 255, 0.4);
+    background-color: rgba(0, 0, 0, 0.05);
     display:inline-flex; /* 박스 크기를 글자 크기에 맞추기 */
     align-items: center;
     justify-content: center;
@@ -115,6 +103,7 @@ nav {
     font-weight: 200;
     font-style: italic;
     width: 50%;
+    margin: 0 40px 0 40px;
   }
 }
 
@@ -151,21 +140,5 @@ nav {
 }
 .deepInfo-right table td {
   width: 60px;
-}
-
-/*************** Hourly Info ***************/
-
-.HourlyInfo {
-  background-color: #eee;
-  height: 200px;
-}
-
-
-
-
-/*************** Daily Info ***************/
-
-.dailyInfo {
-  background-color: #eee;
 }
 

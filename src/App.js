@@ -1,17 +1,16 @@
 import {useEffect, useState} from 'react'
 import Nav from './components/Nav'
 import CurrentInfo from './components/CurrentInfo'
-import HourlyInfo from './components/HourlyInfo'
-import DailyInfo from './components/DailyInfo'
-import Map from './components/Map'
+
 
 function App() {
 
-  const [location, setLocation] = useState('')
+  const [location, setLocation] = useState("")
   const [weatherJSON, setWeatherJSON] = useState(null)
   const [init, setInit] = useState(true)
   const [isCelcius, setIsCelcius] = useState(true)
   const [error, setError] = useState(false)
+  const [weather, setWeather] = useState('clear');
 
   useEffect(()=>{
     navigator.geolocation.getCurrentPosition((position)=>{
@@ -34,7 +33,6 @@ function App() {
       : `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.REACT_APP_WEATHER_KEY}`
       let response = await fetch(url)
       let data = await response.json()
-      console.log(data)
       if (data.cod === 200) {
         setWeatherJSON(data);
         setInit(false);
@@ -55,14 +53,7 @@ function App() {
         <Nav location={location} setLocation={setLocation} getWeatherByPosition={getWeatherByPosition}
         isCelcius={isCelcius} setIsCelcius={setIsCelcius} />
         <div className="info">
-          <div className="leftside">
            <CurrentInfo weatherJSON={weatherJSON} isCelcius={isCelcius} error={error} />
-           <HourlyInfo />
-           <DailyInfo />
-          </div>
-          <div className="rightside">
-            <Map />
-          </div>
         </div>
         
       </div>

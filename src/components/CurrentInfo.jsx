@@ -1,4 +1,4 @@
-const CurrentInfo = ({weatherJSON, isCelcius, error}) => {
+const CurrentInfo = ({weatherJSON, isCelcius, error, setTemp}) => {
 
     const isDataValid =
         weatherJSON &&
@@ -12,6 +12,7 @@ const CurrentInfo = ({weatherJSON, isCelcius, error}) => {
           <>
             <div className="name">{weatherJSON.name}</div>
             {console.log(weatherJSON)}
+            {setTemp((weatherJSON.main.temp - 273.15).toFixed(0))}
             {isCelcius ?
             <div className="deepInfo">
               <div className="deepInfo-left">

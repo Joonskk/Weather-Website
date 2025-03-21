@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react'
 import Nav from './components/Nav'
 import CurrentInfo from './components/CurrentInfo'
 
-
 function App() {
 
   const [location, setLocation] = useState("")
@@ -10,7 +9,7 @@ function App() {
   const [init, setInit] = useState(true)
   const [isCelcius, setIsCelcius] = useState(true)
   const [error, setError] = useState(false)
-  const [weather, setWeather] = useState('clear');
+  const [temp, setTemp] = useState(0)
 
   useEffect(()=>{
     navigator.geolocation.getCurrentPosition((position)=>{
@@ -47,13 +46,24 @@ function App() {
     }
   }
 
+  const bgPicture = temp > 25 ? "hot" : temp > 15 ? "warm" : temp > 5 ? "cool" : "cold"
+  const bgUrl = `/assets/${bgPicture}.jpg`;
+
   return (
     <div className="App">
-      <div className="container">
+      <div className="container" style={{
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        backgroundImage: `url(${bgUrl})`,
+        backgroundBlendMode: "darken",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        color: "white",
+    }}>
         <Nav location={location} setLocation={setLocation} getWeatherByPosition={getWeatherByPosition}
         isCelcius={isCelcius} setIsCelcius={setIsCelcius} />
         <div className="info">
-           <CurrentInfo weatherJSON={weatherJSON} isCelcius={isCelcius} error={error} />
+           <CurrentInfo weatherJSON={weatherJSON} isCelcius={isCelcius} error={error} setTemp={setTemp} />
         </div>
         
       </div>

@@ -1,42 +1,47 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
+import { motion } from 'framer-motion'
 
-const CurrentInfo = ({weatherJSON, isCelcius, error, setTemp}) => {
+const CurrentInfo = ({ weatherJSON, isCelcius, error, setTemp }) => {
+  const isDataValid = weatherJSON && weatherJSON.main && weatherJSON.weather;
 
-    const isDataValid =
-        weatherJSON &&
-        weatherJSON !== "wrong location" &&
-        weatherJSON.main &&
-        weatherJSON.weather;
-
-    useEffect(() => {
-      if (isDataValid) {
-        const celciusTemp = (weatherJSON.main.temp - 273.15).toFixed(0);
-        setTemp(celciusTemp);
-      }
-    }, [isDataValid, weatherJSON, setTemp]);
-
-    const convertTemperature = (kelvin, isCelcius) => {
-      if (isCelcius) {
-        return `${(kelvin - 273.15).toFixed(0)}°C`;
-      } else {
-        return `${((kelvin - 273.15) * 9/5 + 32).toFixed(0)}°F`;
-      }
+  useEffect(() => {
+    if (isDataValid) {
+      const celciusTemp = (weatherJSON.main.temp - 273.15).toFixed(0);
+      setTemp(celciusTemp);
     }
+  }, [isDataValid, weatherJSON, setTemp]);
 
-    return (
-        <div className="currentInfo">
-            {isDataValid ? (
-          <>
-            <div className="name">{weatherJSON.name}</div>
-            {console.log(weatherJSON)}
-            <div className="deepInfo">
-              <div className="deepInfo-left">
-                <div className="temp">{convertTemperature(weatherJSON.main.temp, isCelcius)}</div>
-                <div className="weather">{weatherJSON.weather[0].description}</div>
-              </div>
-              <div className="deepInfo-right">
-                <table>
-                  <tbody>
+  const convertTemperature = (kelvin, isCelcius) => {
+    if (isCelcius) {
+      return `${(kelvin - 273.15).toFixed(0)}°C`;
+    } else {
+      return `${((kelvin - 273.15) * 9 / 5 + 32).toFixed(0)}°F`;
+    }
+  }
+
+  return (
+    <motion.div
+      className="currentInfo"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+    >
+      {isDataValid ? (
+        <>
+          <div className="name">{weatherJSON.name}</div>
+          <motion.div
+            className="deepInfo"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <div className="deepInfo-left">
+              <div className="temp">{convertTemperature(weatherJSON.main.temp, isCelcius)}</div>
+              <div className="weather">{weatherJSON.weather[0].description}</div>
+            </div>
+            <div className="deepInfo-right">
+              <table>
+                <tbody>
                   <tr>
                     <th>최대</th>
                     <td>{convertTemperature(weatherJSON.main.temp_max, isCelcius)}</td>
@@ -49,24 +54,26 @@ const CurrentInfo = ({weatherJSON, isCelcius, error, setTemp}) => {
                     <th>체감</th>
                     <td>{convertTemperature(weatherJSON.main.feels_like, isCelcius)}</td>
                   </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div className="weather-icon">
-                <img src={`https://openweathermap.org/img/wn/${weatherJSON.weather[0].icon}@2x.png`} alt={weatherJSON.weather[0].description} />
-              </div>
+                </tbody>
+              </table>
             </div>
-          </>
-        ) : (
-          <>
-          {
-            error ? <h1>Wrong Location</h1> : null
-          }
-          </>
-        )}
-        </div>
-    )
+            <motion.div
+              className="weather-icon"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1 }}
+            >
+              <img src={`https://openweathermap.org/img/wn/${weatherJSON.weather[0].icon}@2x.png`} alt={weatherJSON.weather[0].description} />
+            </motion.div>
+          </motion.div>
+        </>
+      ) : (
+        <>
+          {error && <h1>Wrong Location</h1>}
+        </>
+      )}
+    </motion.div>
+  )
 }
 
-// Used React.memo() to avoid rerendering CurrentInfo.jsx
 export default React.memo(CurrentInfo);

@@ -1,3 +1,4 @@
+import React from 'react'
 import Search from './Search'
 import Transfer from './Transfer'
 
@@ -11,4 +12,5 @@ const Nav = ({location, setLocation, getWeatherByPosition, isCelcius, setIsCelci
     )
 }
 
-export default Nav
+// Used React.memo() to avoid rerendering Nav.jsx
+export default React.memo(Nav)

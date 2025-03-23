@@ -1,6 +1,7 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useCallback, useMemo} from 'react'
 import Nav from './components/Nav'
 import CurrentInfo from './components/CurrentInfo'
+import Spinner from './components/Spinner'
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
   const [init, setInit] = useState(true)
   const [isCelcius, setIsCelcius] = useState(true)
   const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [temp, setTemp] = useState(0)
 
   useEffect(()=>{
@@ -25,8 +27,10 @@ function App() {
     console.log("Error state changed:", error);
   }, [error]);
 
-  const getWeatherByPosition = async (lat, lon) => {
+  // Used useCallback Hook to avoid recreating getWeatherByPosition if isCelcius changes.
+  const getWeatherByPosition = useCallback(async (lat, lon) => {
     try {
+      setLoading(true)
       setError(false)
       let url = init ? `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_KEY}`
       : `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.REACT_APP_WEATHER_KEY}`
@@ -43,10 +47,22 @@ function App() {
     } catch (err) {
       setWeatherJSON(null)
       setError(true)
+    } finally {
+      setLoading(false)
     }
-  }
+  },[init, location])
 
-  const bgPicture = temp > 25 ? "hot" : temp > 15 ? "warm" : temp > 5 ? "cool" : "cold"
+  useEffect(()=>{
+    console.log("getWeatherByPosition Changed!!!")
+  },[getWeatherByPosition])
+
+
+  // Used useMemo Hook to avoid changing bgPicture in unnecessary situations.
+  const bgPicture = useMemo(() => {
+    if (loading) return "loading";
+    return temp > 25 ? "hot" : temp > 15 ? "warm" : temp > 5 ? "cool" : "cold";
+  }, [loading, temp]);
+  
   const bgUrl = `/assets/${bgPicture}.jpg`;
 
   return (
@@ -63,7 +79,8 @@ function App() {
         <Nav location={location} setLocation={setLocation} getWeatherByPosition={getWeatherByPosition}
         isCelcius={isCelcius} setIsCelcius={setIsCelcius} />
         <div className="info">
-           <CurrentInfo weatherJSON={weatherJSON} isCelcius={isCelcius} error={error} setTemp={setTemp} />
+          {loading ? <Spinner /> : 
+          <CurrentInfo weatherJSON={weatherJSON} isCelcius={isCelcius} error={error} setTemp={setTemp} />}
         </div>
         
       </div>

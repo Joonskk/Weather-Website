@@ -3,7 +3,15 @@ import React from 'react'
 import Search from './Search'
 import Transfer from './Transfer'
 
-const Nav = ({location, setLocation, getWeatherByPosition, isCelcius, setIsCelcius}) => {
+type NavProps = {
+    location: string;
+    setLocation: React.Dispatch<React.SetStateAction<string>>;
+    getWeatherByPosition: (lat?: number, lon?: number) => Promise<void>;
+    isCelcius: boolean;
+    setIsCelcius: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Nav: React.FC<NavProps> = ({location, setLocation, getWeatherByPosition, isCelcius, setIsCelcius}) => {
     return (
         <motion.nav
       initial={{ y: -50, opacity: 0 }}

@@ -1,13 +1,13 @@
-import { useEffect } from "react"
-
-const Transfer = ({isCelcius, setIsCelcius}) => {
+type TransferProps = {
+    isCelcius: boolean;
+    setIsCelcius: React.Dispatch<React.SetStateAction<boolean>>;
+}
+// FC = Functional Component
+const Transfer: React.FC<TransferProps> = ({isCelcius, setIsCelcius}) => {
 
     const onClick = () => {
         setIsCelcius(!isCelcius)
     }
-
-    useEffect(()=>{
-    },[isCelcius])
 
     return (
         <div className="transfer">

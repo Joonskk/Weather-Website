@@ -1,7 +1,6 @@
-import React from 'react'
 import { motion } from 'framer-motion'
 
-const Spinner = () => {
+const Spinner: React.FC = () => {
   return (
     <div className="spinner-container">
       <motion.div

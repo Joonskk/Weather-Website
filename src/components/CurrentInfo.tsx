@@ -1,17 +1,44 @@
 import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
 
-const CurrentInfo = ({ weatherJSON, isCelcius, error, setTemp }) => {
+type WeatherData = {
+  name: string;
+  main: WeatherMain;
+  weather: WeatherDescription[];
+}
+
+type WeatherMain = {
+  temp: number;
+  temp_max: number;
+  temp_min: number;
+  humidity: number;
+  feels_like: number;
+}
+
+type WeatherDescription = {
+  description: string;
+  icon: string;
+}
+
+
+type CurrentInfoProps = {
+  weatherJSON: WeatherData;
+  isCelcius: boolean;
+  error: boolean;
+  setTemp: React.Dispatch<React.SetStateAction<number>>;
+}
+// FC = Fucntional Component
+const CurrentInfo: React.FC<CurrentInfoProps> = ({ weatherJSON, isCelcius, error, setTemp }) => {
   const isDataValid = weatherJSON && weatherJSON.main && weatherJSON.weather;
 
   useEffect(() => {
     if (isDataValid) {
-      const celciusTemp = (weatherJSON.main.temp - 273.15).toFixed(0);
+      const celciusTemp = parseInt((weatherJSON.main.temp - 273.15).toFixed(0));
       setTemp(celciusTemp);
     }
   }, [isDataValid, weatherJSON, setTemp]);
 
-  const convertTemperature = (kelvin, isCelcius) => {
+  const convertTemperature = (kelvin: number, isCelcius: boolean): string => {
     if (isCelcius) {
       return `${(kelvin - 273.15).toFixed(0)}°C`;
     } else {

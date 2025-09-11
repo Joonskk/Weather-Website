@@ -18,7 +18,7 @@ const Nav: React.FC<NavProps> = ({location, setLocation, getWeatherByPosition, i
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-            <div className="logo"><a href="/">날씨</a></div>
+            <div className="logo"><a href="/">Clime</a></div>
             <Search location={location} setLocation={setLocation} getWeatherByPosition={getWeatherByPosition} />
             <Transfer isCelcius={isCelcius} setIsCelcius={setIsCelcius} />
         </motion.nav>

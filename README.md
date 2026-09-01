@@ -11,7 +11,7 @@ Robust Error & Exception Handling: Implements defensive programming techniques t
 Performance & Responsive Optimization: Built with a mobile-first approach, ensuring fluid layouts, optimized asset loading, and rapid rendering across diverse device form factors.
 
 ## 🛠️ Tech Stack
-Full Stack: HTML5/CSS3, JavaScript (ES6+), React
+Full Stack: HTML5/CSS3, JavaScript (ES6+), React, Typescript
 
 API Integration: OpenWeather API (Async/Await data fetching, JSON parsing)
 

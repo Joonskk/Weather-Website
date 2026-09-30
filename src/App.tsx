@@ -15,6 +15,20 @@ function App() {
   const [temp, setTemp] = useState<number>(0)
 
   useEffect(() => {
+    const cachedData = sessionStorage.getItem('clime_weather_cache')
+    const cacheTime = sessionStorage.getItem('clime_cache_time')
+
+    if (cachedData && cacheTime && Date.now() - Number(cacheTime) < 10 * 60 * 1000) {
+      const parsed = JSON.parse(cachedData)
+      setWeatherJSON(parsed)
+      setInit(false)
+      setLoading(false)
+      if (parsed.main?.temp) {
+        setTemp(parsed.main.temp - 273.15) // Convert Kelvin to Celsius if applicable
+      }
+      return
+    }
+
     navigator.geolocation.getCurrentPosition((position) => {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
@@ -36,6 +50,9 @@ function App() {
       if (data.cod === 200) {
         setWeatherJSON(data);
         setInit(false);
+
+        sessionStorage.setItem('clime_weather_cache', JSON.stringify(data));
+        sessionStorage.setItem('clime_cache_time', String(Date.now()))
       } else {
         setWeatherJSON(null);
         setError(true);
@@ -76,7 +93,7 @@ function App() {
           className="info"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
+          transition={{ duration: 0.2 }}
         >
         { loading 
           ? <Spinner />

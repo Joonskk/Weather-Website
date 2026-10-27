@@ -8,7 +8,6 @@ function App() {
 
   const [location, setLocation] = useState<string>("")
   const [weatherJSON, setWeatherJSON] = useState<any>(null)
-  const [init, setInit] = useState<boolean>(true)
   const [isCelcius, setIsCelcius] = useState<boolean>(true)
   const [error, setError] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(true)
@@ -21,7 +20,6 @@ function App() {
     if (cachedData && cacheTime && Date.now() - Number(cacheTime) < 10 * 60 * 1000) {
       const parsed = JSON.parse(cachedData)
       setWeatherJSON(parsed)
-      setInit(false)
       setLoading(false)
       if (parsed.main?.temp) {
         setTemp(parsed.main.temp - 273.15) // Convert Kelvin to Celsius if applicable
@@ -34,7 +32,9 @@ function App() {
       let lon = position.coords.longitude;
       getWeatherByPosition(lat, lon)
     }, (error) => {
+      // Without location access, stop the spinner and let the user search for a city
       console.error("Error occurred: ", error)
+      setLoading(false)
     });
   }, [])
 
@@ -42,14 +42,14 @@ function App() {
     try {
       setLoading(true)
       setError(false)
-      let url = init
+      // Use coordinates when we have them (first load), otherwise the searched city name
+      let url = lat !== undefined && lon !== undefined
         ? `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_KEY}`
         : `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.REACT_APP_WEATHER_KEY}`
       let response = await fetch(url)
       let data = await response.json()
       if (data.cod === 200) {
         setWeatherJSON(data);
-        setInit(false);
 
         sessionStorage.setItem('clime_weather_cache', JSON.stringify(data));
         sessionStorage.setItem('clime_cache_time', String(Date.now()))
@@ -63,7 +63,7 @@ function App() {
     } finally {
       setLoading(false)
     }
-  }, [init, location])
+  }, [location])
 
   // Used useMemo Hook to avoid changing bgPicture in unnecessary situations.
   const bgPicture = useMemo(() => {

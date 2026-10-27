@@ -70,15 +70,15 @@ const CurrentInfo: React.FC<CurrentInfoProps> = ({ weatherJSON, isCelcius, error
               <table>
                 <tbody>
                   <tr>
-                    <th>최대</th>
+                    <th>High</th>
                     <td>{convertTemperature(weatherJSON.main.temp_max, isCelcius)}</td>
-                    <th>습도</th>
+                    <th>Humidity</th>
                     <td>{weatherJSON.main.humidity}%</td>
                   </tr>
                   <tr>
-                    <th>최소</th>
+                    <th>Low</th>
                     <td>{convertTemperature(weatherJSON.main.temp_min, isCelcius)}</td>
-                    <th>체감</th>
+                    <th>Feels like</th>
                     <td>{convertTemperature(weatherJSON.main.feels_like, isCelcius)}</td>
                   </tr>
                 </tbody>
@@ -96,7 +96,7 @@ const CurrentInfo: React.FC<CurrentInfoProps> = ({ weatherJSON, isCelcius, error
         </>
       ) : (
         <>
-          {error && <h1>Wrong Location</h1>}
+          {error ? <h1>City not found. Check the spelling and try again.</h1> : <h1>Search for a city to see its weather.</h1>}
         </>
       )}
     </motion.div>

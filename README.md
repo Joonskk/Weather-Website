@@ -1,18 +1,49 @@
-## 📌 Project Overview
-Clime is a modern, responsive weather web application engineered to deliver live meteorological data seamlessly. By leveraging the OpenWeather API, it provides users with precise climate metrics while dynamically adapting its visual architecture based on ambient temperature and weather conditions to enhance user engagement.
+# Clime
 
-## ✨ Key Features
-Live Meteorological Dashboard: Fetches and visualizes critical real-time data, including current temperature, general weather conditions, daily high/low forecasts, and relative humidity.
+A weather app built with React and TypeScript. It shows the current weather for your location, or for any city you search, and changes its background to match the temperature.
 
-Dynamic Contextual UI/UX: Automatically transforms background themes, color palettes, and visual gradients programmatically based on real-time temperature fluctuations and weather states.
+**Live demo:** https://weather-website-wheat.vercel.app
 
-Robust Error & Exception Handling: Implements defensive programming techniques to gracefully manage API failure states, invalid location inputs, and network latency (e.g., fallback UI, clear error messaging).
+![Clime showing the weather in San Francisco](docs/screenshot.jpg)
 
-Performance & Responsive Optimization: Built with a mobile-first approach, ensuring fluid layouts, optimized asset loading, and rapid rendering across diverse device form factors.
+## Features
 
-## 🛠️ Tech Stack
-Full Stack: HTML5/CSS3, JavaScript (ES6+), React, Typescript
+- **Weather where you are:** on first load it asks for your location and fetches the weather for those coordinates. If you decline, you can still search for any city.
+- **City search:** type a city and press Enter.
+- **Current conditions:** temperature, description, daily high and low, humidity and "feels like", with a °C / °F toggle.
+- **Background that follows the temperature:** four photo themes (cold, cool, warm, hot), chosen from the current temperature.
+- **Short-lived cache:** the last response is kept in `sessionStorage` for 10 minutes, so reloading the page doesn't call the API again.
+- **Error states:** an unknown city or a failed request shows a message instead of a blank screen.
 
-API Integration: OpenWeather API (Async/Await data fetching, JSON parsing)
+## Tech stack
 
-Deployment & CI/CD: Vercel (Continuous Deployment, Global Edge Network)
+| Area | Tools |
+| --- | --- |
+| UI | React 19, TypeScript, Framer Motion |
+| Data | [OpenWeather Current Weather API](https://openweathermap.org/current) |
+| Build | Create React App |
+| Hosting | Vercel |
+
+## How it works
+
+- `App.tsx` holds the state: the weather response, loading and error flags, the unit, and the temperature that picks the background.
+- `getWeatherByPosition` calls OpenWeather with coordinates on first load, or with the city name after a search. It checks the response's `cod` field, because OpenWeather returns error details in the JSON body.
+- The background theme is computed with `useMemo`, so it only changes when the temperature or loading state changes. `Nav` and `CurrentInfo` are wrapped in `React.memo` to skip re-renders when their props don't change.
+
+## Run it locally
+
+Requirements: Node.js 18+ and a free [OpenWeather API key](https://home.openweathermap.org/api_keys).
+
+```bash
+git clone https://github.com/Joonskk/Weather-Website.git
+cd Weather-Website
+npm install
+cp .env.example .env   # then put your API key in .env
+npm start
+```
+
+Then open http://localhost:3000.
+
+## Notes
+
+Create React App bundles `REACT_APP_*` variables into the browser code, so the OpenWeather key is visible to anyone who opens the site. That's acceptable for a free, rate-limited key. A production app would send requests through a small server or serverless function that holds the key.
